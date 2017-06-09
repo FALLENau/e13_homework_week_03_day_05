@@ -8,19 +8,22 @@ class User
 
   def self.delete_all
     sql = "Delete from users;"
-    SqlRunner.run(sql)
+    values = []
+    SqlRunner.run(sql, values)
   end
 
   def self.all()
     sql = "Select * from users;"
-    user_hashes = SqlRunner.run(sql)
+    values = []
+    user_hashes = SqlRunner.run(sql, values)
     user_objects = user_hashes.map { |user_hash| User.new(user_hash) }
     return user_objects
   end
 
   def save
-    sql = "INSERT INTO users (name) VALUES ('#{@name}') RETURNING *;"
-    returned_array = SqlRunner.run(sql)
+    sql = "INSERT INTO users (name) VALUES ($1) RETURNING *;"
+    values = [@name]
+    returned_array = SqlRunner.run(sql, values)
     user_hash = returned_array[0]
     @id = user_hash['id'].to_i
   end

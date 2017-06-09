@@ -2,10 +2,11 @@ require('PG')
 
 class SqlRunner
 
-  def self.run(sql)
+  def self.run(sql, values)
     begin
       db = PG.connect({dbname: 'sql_injection', host: 'localhost'})
-      result = db.exec(sql)
+      db.prepare("query", sql)
+      result = db.exec_prepared("query", values)
     ensure
       db.close
     end
