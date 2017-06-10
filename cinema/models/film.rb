@@ -4,9 +4,8 @@ class Film
 
   def initialize( options )
     @id = options['id'].to_i
-    # @ticket_number = options['ticket_number'].to_i
-    # @customer_id = options['customer_id'].to_i
-    # @film_id = options['film_id'].to_i
+    @title = options['title']
+    @price = options['price'].to_i
   end
 
 end
