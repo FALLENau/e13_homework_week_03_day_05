@@ -20,9 +20,9 @@ class Ticket
 
   def update()
     sql = "UPDATE tickets SET (
-    ticket_number, customer_id, film_id
+      customer_id, film_id
     ) = (
-      '#{@ticket_number}','#{@customer_id}''#{@film_id}'
+      #{@customer_id}', '#{@film_id}'
     ) WHERE is = #{@id}"
     customer = SqlRunner.run(sql)
     return customer.map{|person| Customer.new(person)}

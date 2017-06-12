@@ -19,7 +19,7 @@ class Customer
 
   def update()
     sql = "UPDATE customers SET (
-    name
+    name, funds
     ) = (
       '#{@name}','#{@funds}'
     ) WHERE is = #{@id}"
@@ -32,6 +32,14 @@ class Customer
     sql = "SELECT * FROM films WHERE id = #{id}"
     results = SqlRunner.run(sql)[0]
     return results
+  end
+
+  def films()
+    sql = "SELECT films.* FROM films
+    INNER JOIN tickets
+    ON films.id = tickets.film_id
+    WHERE tickets.customer_id = #{@id}"
+    return Film.map_items(sql)[0]
   end
 
   def self.all()
@@ -50,6 +58,6 @@ class Customer
     item_hashes = SqlRunner.run(sql)
     result = item_hashes.map {|customer_hash| Customer.new(customer_hash)}
     return result
-  end #note: not working yet... but maybe it is ?
+  end
 
 end
